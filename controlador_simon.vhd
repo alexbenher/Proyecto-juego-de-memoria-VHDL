@@ -8,8 +8,8 @@ entity controlador_simon is
         reset: in std_logic;             -- reset global
         inicio: in std_logic;            -- inicio del juego
         fin: in std_logic;            -- fin
-        entrada_valida: in std_logic;         
-        entrada_jugador: in std_logic_vector(1 downto 0);
+        entrada_valida: in std_logic;         -- señal que asegura entrada de usuario
+        entrada_jugador: in std_logic_vector(1 downto 0); -- entrada usuario
         contRand: in integer;    
         equals_cont_5seg: in std_logic;
         equals_cont_2seg: in std_logic;
@@ -34,7 +34,7 @@ architecture ARCH of controlador_simon is
             7 => "100100"            
         );
         
-    type STATES is (S0, S1, S2_PRE, S2, S3, S4, S5, S6, S7, S8); --Define the states here
+    type STATES is (S0, S1, S2_PRE, S2, S3, S4, S5, S6, S7, S8); 
         signal STATE, NEXT_STATE: STATES;
         signal nivel, nivel_next: integer := 0;
         signal secuencia, secuencia_next: std_logic_vector (5 downto 0);
@@ -246,7 +246,7 @@ COMB: process (STATE, inicio, fin, entrada_jugador, timer, equals_cont_5seg, niv
             enable_contador5seg <= '1';
             if equals_cont_2seg = '1' then
                 if nivel >= MAX_NIVELES then
-                    NEXT_STATE <= S8;  -- Gan� todo
+                    NEXT_STATE <= S8;  -- Ganó todo
                 else 
                     NEXT_STATE <= S0;  -- Siguiente nivel
                 end if;
